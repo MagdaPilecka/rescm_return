@@ -1,0 +1,25 @@
+Sub rescm_ret()
+ 
+' Male makro wyciajace roznice w invoice od RESCM do nowego arkusza
+' makro ustawia filtr i kopiuje do osobnego arkusza dane gdzie
+' wystepuja roznice i odstepstwa od pierwotnej faktury
+ 
+ 
+On Error Resume Next
+'wybierz arkusz invoice i sciagnij filtry jesli istnieja
+ 
+Worksheets("Invoice").Activate
+ActiveSheet.ShowAllData
+range("$A$16:$T$15").AutoFilter Field:=18, Criteria1:="<>", Criteria2:="<>0", Operator:=xlAnd
+ActiveSheet.Cells.Copy
+ 
+'stworz nowy arkusz o nazwie MTB
+ 
+Sheets.Add.name = "MTB"
+ActiveSheet.range("a1").PasteSpecial
+ 
+'usun rescmowy header
+ 
+ActiveSheet.range("A1:A15").EntireRow.Delete
+ActiveSheet.UsedRange.Columns.AutoFit
+End Sub
